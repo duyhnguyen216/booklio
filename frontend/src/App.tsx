@@ -154,7 +154,14 @@ export default function App() {
                         placeholder="Type your question here..."
                         value={question}
                         onChange={(e) => setQuestion(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" && !e.shiftKey) {
+                                e.preventDefault(); // prevent newline
+                                handleSubmit();     // trigger submit
+                            }
+                        }}
                     />
+
                 </div>
 
                 {/* product selector */}

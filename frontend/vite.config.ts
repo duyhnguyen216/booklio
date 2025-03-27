@@ -10,6 +10,14 @@ export default defineConfig({
       "@": resolve(__dirname, "./src"),
     },
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3001", // your Express server
+        changeOrigin: true,
+      },
+    },
+  },
   build: {
     outDir: "../backend/client", // output to backend/client folder
     emptyOutDir: true,
