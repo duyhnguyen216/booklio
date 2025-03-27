@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowJs": true, // ✅ allow .js/.jsx files
+    "checkJs": false, // ✅ don’t type-check JS (optional, depends on preference)
+    "jsx": "react-jsx", // ✅ use new JSX transform
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "composite": true,
+    /* Paths (for shadcn/ui since paths in tsconfig.app.json are not working) */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}
