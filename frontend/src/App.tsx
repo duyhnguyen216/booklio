@@ -4,13 +4,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import {
-    Select,
-    SelectTrigger,
-    SelectValue,
-    SelectContent,
-    SelectItem,
-} from "@/components/ui/select";
 
 const products = [
     { name: "Economics Principles & Policy", id: "9781337696326_p02_lores.pdf" },
@@ -122,7 +115,7 @@ export default function App() {
     const handleSubmit = async () => {
         const productName = getProductName(productId);
 
-        const res = await fetch("http://localhost:3001/api/generate-url", {
+        const res = await fetch("/api/generate-url", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
