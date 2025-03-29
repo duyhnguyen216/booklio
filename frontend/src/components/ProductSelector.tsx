@@ -63,11 +63,18 @@ export default function ProductSelector({
                             key={product.id}
                             onClick={() => onChange(product.id)}
                             className={cn(
-                                "flex flex-col items-center justify-between p-5 rounded-xl border hover:shadow-md hover:bg-muted/40 transition cursor-pointer text-center h-60",
-                                product.id === value &&
-                                "border-primary ring-2 ring-primary/50 bg-muted"
+                                "relative flex flex-col items-center justify-between p-5 rounded-xl border text-center h-60 transition-transform transform hover:shadow-md hover:bg-muted/40 cursor-pointer",
+                                product.id === value
+                                    ? "border-primary ring-2 ring-primary/50 bg-muted scale-105 shadow-lg"
+                                    : "opacity-90 hover:opacity-100"
                             )}
                         >
+                            {product.id === value && (
+                                <div className="absolute top-2 right-2 text-primary text-xl">
+                                    ✅
+                                </div>
+                            )}
+
                             <img
                                 src={getImageUrl(product.name)}
                                 alt="Book cover"

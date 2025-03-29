@@ -1,6 +1,6 @@
 import ThemeToggle from "@/components/ThemeToggle";
 import ProductSelector from "@/components/ProductSelector";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -94,17 +94,41 @@ const products = [
 ];
 
 
+
 export default function App() {
     const [question, setQuestion] = useState("");
     const [productId, setProductId] = useState(products[0].id);
     const [instructions, setInstructions] = useState("");
     const [generatedUrl, setGeneratedUrl] = useState("");
     const [showPrompt, setShowPrompt] = useState(false);
+    const questionRef = useRef<HTMLTextAreaElement | null>(null);
+
+    function scrollToSmoothly(pos: number, time: number = 500) {
+        const currentPos = window.pageYOffset;
+        let start: number | null = null;
+
+        window.requestAnimationFrame(function step(currentTime) {
+            if (!start) start = currentTime;
+            const progress = currentTime - start;
+            const distance = pos - currentPos;
+            const delta = (distance * progress) / time;
+
+            window.scrollTo(0, currentPos + delta);
+
+            if (progress < time) {
+                window.requestAnimationFrame(step);
+            } else {
+                window.scrollTo(0, pos);
+            }
+        });
+    }
 
     useEffect(() => {
         setInstructions(
             "INSTRUCTIONS: 1) In your answer give a quick summary, the location(s) in which this subject is found in the book, and then a few bullet points with useful details elucidating your response"
         );
+        // Focus on question field
+        questionRef.current?.focus();
     }, []);
 
     const getProductName = (id: string) => {
@@ -113,6 +137,10 @@ export default function App() {
     };
 
     const handleSubmit = async () => {
+        if (!question.trim()) {
+            alert("Please enter a question before submitting!");
+            return;
+        }
         const productName = getProductName(productId);
 
         const res = await fetch("/api/generate-url", {
@@ -151,6 +179,7 @@ export default function App() {
                         Your Question
                     </label>
                     <Textarea
+                        ref={questionRef}
                         placeholder="Type your question here..."
                         value={question}
                         onChange={(e) => setQuestion(e.target.value)}
@@ -169,8 +198,18 @@ export default function App() {
                     <ProductSelector
                         products={products}
                         value={productId}
-                        onChange={setProductId}
+                        onChange={(id) => {
+                            setProductId(id);
+
+                            setTimeout(() => {
+                                if (questionRef.current) {
+                                    scrollToSmoothly(0, 300);
+                                    questionRef.current.focus();
+                                }
+                            }, 200); // slight delay to give feedback
+                        }}
                     />
+
                 </div>
 
                 {/* prompt toggle + editor */}

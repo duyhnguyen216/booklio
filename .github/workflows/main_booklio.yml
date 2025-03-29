@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Production'
+      name: 'booklio-dev'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
@@ -76,6 +76,6 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'booklio'
-          slot-name: 'Production'
+          slot-name: 'dev'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B13842042D2A472A92DD796F9433BF78 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DB8243FF860C4B34BC855A4442F29075 }}
