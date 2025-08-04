@@ -34,6 +34,7 @@ export default function ProductFilter({
                             checked={selectedCountries.includes(country)}
                             onChange={() => onCountryChange(country)}
                             className="accent-primary"
+                            disabled={country !== "Canada"} // Disable all except Canada
                         />
                         <span>{country}</span>
                     </label>
