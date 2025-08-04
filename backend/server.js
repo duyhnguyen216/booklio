@@ -13,7 +13,7 @@ app.post("/api/generate-url", (req, res) => {
     const encodedInstructions = encodeURIComponent(instructions);
     const encodedQuestion = encodeURIComponent(question);
 
-    const url = `https://atolio.cengage.com/insights?q=USE[Product: "${encodedProductName}"; Filename: ${productId}] | [${encodedInstructions}] | QUESTION: [${encodedQuestion}]`;
+    const url = `https://ux1.test-atolio.cengage.info/insights?q=USE[Product: "${encodedProductName}"; Filename: ${productId}] | [${encodedInstructions}] | QUESTION: [${encodedQuestion}]`;
 
     res.json({ url });
 });
